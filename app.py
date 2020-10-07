@@ -153,8 +153,8 @@ if button_deb:
 
 # =====================================================================
 st.sidebar.title("Evaluate on Metric")
-model_choice = st.sidebar.selectbox("Choose an evalaution metric:", ['Word2Vec', 'Word2Vec debiased'])
-metric_choice = st.sidebar.selectbox("Choose an evalaution metric:", ['WEAT'])
+model_choice = st.sidebar.selectbox("Choose a model to evaluate on:", ['Word2Vec', 'Word2Vec debiased'])
+metric_choice = st.sidebar.selectbox("Choose an evaluation metric:", ['WEAT'])
 # Metric lists
 hosp_list = st.sidebar.selectbox("6. Select term list with a property", ['female_terms', 'male_terms', 'female_names', 'male_names', 'young_people_names', 'old_people_names', 'european_american_names_5', 'african_american_names_5'])
 terms_6 = get_terms(hosp_list)
