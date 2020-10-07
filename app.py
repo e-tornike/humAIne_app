@@ -7,8 +7,8 @@ import pathlib
 import requests
 import numpy as np
 import pandas as pd
+import gensim.downloader as api
 from gensim.models import KeyedVectors
-#from gensim.models import fasttext as FT
 from sklearn.decomposition import PCA
 
 import streamlit as st
@@ -18,29 +18,15 @@ from src.models import get_3D_coordinates
 from src.debias_Lauscher2020 import debias_model
 from src.metrics import get_terms, get_metric
 
-# import fasttext
-# import fasttext.util
 
-# fasttext.util.download_model('en', if_exists='ignore')
-# ft = fasttext.load_model('cc.en.300.bin')
-
-MODEL_PATH = "w2v.100k.txt"
-
-# if not os.path.isfile(MODEL_PATH):
-#     r = requests.get("https://www.dropbox.com/s/d7b4f6gn3zae1ie/cc.en.25.bin?dl=0", stream=True, allow_redirects=True)
-#     with open(MODEL_PATH, "wb") as f:
-#         for chunk in r.iter_content(chunk_size=1024):
-#             if chunk:
-#                 f.write(chunk)
+MODEL_PATH = "glove-twitter-25"
 
 @st.cache(allow_output_mutation=True)
 def load_models():
-    #model = FT.load_facebook_vectors(MODEL_PATH)
-    # model = fasttext.load_model('cc.en.300.bin')
-    model = KeyedVectors.load_word2vec_format(MODEL_PATH)
+    model = api.load(MODEL_PATH)
     model_deb = copy.deepcopy(model)
     model_deb.init_sims(replace=True)
-    return {"fastText": model, "fastText debiased": model_deb}
+    return {"GloVe": model, "GloVe debiased": model_deb}
 
 headers_1 = {'accept': 'application/json'}
 headers_2 = {'accept': 'application/json', 'Content-Type': 'application/json'}
@@ -50,7 +36,7 @@ st.title("Visualizer")
 st.sidebar.title("Parameters")
 st.sidebar.title("Choose Model")
 
-model_choice = st.sidebar.selectbox("Choose a model:", ['fastText'])
+model_choice = st.sidebar.selectbox("Choose a model:", ['GloVe'])
 
 LOOKUP = load_models()  # load models
 
@@ -81,8 +67,8 @@ button_viz = st.sidebar.button("Visualize")
 if button_viz:
     coordinates = get_3D_coordinates(model, terms)
 
-    st.markdown("FastText Model")
-    st.markdown("Word embeddings are vectors of numbers that are used to represent words. FastText (Grave et al., 2018) word embeddings were trained on the text on Common Crawl and Wikipedia, which contain many millions of websites. The model learns vectors for words, which are called word embeddings, by prediction a word according to its context. For example, when looking at a sequence of 5 words, the middle word in the sequence is predicted taking the surrounding words into account.")
+    st.markdown("GloVe Model")
+    st.markdown("Word embeddings are vectors of numbers that are used to represent words. GloVe (Grave et al., 2018) word embeddings were trained on the text on Common Crawl and Wikipedia, which contain many millions of websites. The model learns vectors for words, which are called word embeddings, by prediction a word according to its context. For example, when looking at a sequence of 5 words, the middle word in the sequence is predicted taking the surrounding words into account.")
 
     _t1_coords = [coordinates[t] for t in viz_terms_1]
     _t2_coords = [coordinates[t] for t in viz_terms_2]
@@ -127,8 +113,8 @@ deb_terms_2 = text_5.split(", ")
 button_deb = st.sidebar.button("Run debiasing")
 
 if button_deb:
-    LOOKUP["fastText debiased"] = debias_model(LOOKUP["fastText debiased"], deb_choice, deb_terms_1, deb_terms_2)
-    model = LOOKUP["fastText debiased"]
+    LOOKUP["GloVe debiased"] = debias_model(LOOKUP["GloVe debiased"], deb_choice, deb_terms_1, deb_terms_2)
+    model = LOOKUP["GloVe debiased"]
     coordinates = get_3D_coordinates(model, terms)
 
     st.markdown("GBDD Debiasing")
@@ -199,3 +185,4 @@ if button_metric:
     
     st.markdown(f"WEAT score: {str(result)}")
     
+
