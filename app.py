@@ -25,16 +25,16 @@ from src.metrics import get_terms, get_metric
 
 MODEL_PATH = "cc.en.25.bin"
 
-if not os.path.isfile(MODEL_PATH):
-    r = requests.get("https://www.dropbox.com/s/d7b4f6gn3zae1ie/cc.en.25.bin?dl=0", stream=True, allow_redirects=True)
-    with open(MODEL_PATH, "wb") as f:
-        for chunk in r.iter_content(chunk_size=1024):
-            if chunk:
-                f.write(chunk)
+# if not os.path.isfile(MODEL_PATH):
+#     r = requests.get("https://www.dropbox.com/s/d7b4f6gn3zae1ie/cc.en.25.bin?dl=0", stream=True, allow_redirects=True)
+#     with open(MODEL_PATH, "wb") as f:
+#         for chunk in r.iter_content(chunk_size=1024):
+#             if chunk:
+#                 f.write(chunk)
 
 @st.cache(allow_output_mutation=True)
 def load_models():
-    model = FT.load_facebook_vectors("cc.en.25.bin")
+    model = FT.load_facebook_vectors(MODEL_PATH)
     # model = fasttext.load_model('cc.en.300.bin')
     model_deb = copy.deepcopy(model)
     model_deb.init_sims(replace=True)
