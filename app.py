@@ -18,7 +18,7 @@ from src.metrics import get_terms, get_metric
 
 # @st.cache(allow_output_mutation=True)
 # def load_models():
-#     model = FT.load_facebook_vectors("./models/cc.en.25.bin.gz")
+#     model = FT.load_facebook_vectors("/app/models/cc.en.25.bin.gz")
 #     model_deb = copy.deepcopy(model)
 #     model_deb.init_sims(replace=True)
 #     return {"fastText": model, "fastText debiased": model_deb}
