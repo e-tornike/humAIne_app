@@ -1,8 +1,10 @@
 import sys
 sys.path.append(".")
+import os
 import json
 import copy
 import pathlib
+import requests
 import numpy as np
 import pandas as pd
 from gensim.models import fasttext as FT
@@ -15,6 +17,12 @@ from src.models import get_3D_coordinates
 from src.debias_Lauscher2020 import debias_model
 from src.metrics import get_terms, get_metric
 
+MODEL_PATH = "cc.en.25.bin.gz"
+
+if not os.path.isfile(MODEL_PATH):
+    r = requests.get("https://www.dropbox.com/s/06zx30696rdllg2/cc.en.25.bin.gz?dl=0", allow_redirects=True)
+    with open(MODEL_PATH, "wb") as f:
+        f.write(r.content)
 
 # @st.cache(allow_output_mutation=True)
 # def load_models():
