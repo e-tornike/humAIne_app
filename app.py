@@ -23,7 +23,7 @@ from src.metrics import get_terms, get_metric
 # fasttext.util.download_model('en', if_exists='ignore')
 # ft = fasttext.load_model('cc.en.300.bin')
 
-MODEL_PATH = "cc.en.25.bin"
+MODEL_PATH = "cc.en.10.bin"
 
 # if not os.path.isfile(MODEL_PATH):
 #     r = requests.get("https://www.dropbox.com/s/d7b4f6gn3zae1ie/cc.en.25.bin?dl=0", stream=True, allow_redirects=True)
