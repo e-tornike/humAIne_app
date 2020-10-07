@@ -153,6 +153,7 @@ if button_deb:
 
 # =====================================================================
 st.sidebar.title("Evaluate on Metric")
+model_choice = st.sidebar.selectbox("Choose an evalaution metric:", ['Word2Vec', 'Word2Vec debiased'])
 metric_choice = st.sidebar.selectbox("Choose an evalaution metric:", ['WEAT'])
 # Metric lists
 hosp_list = st.sidebar.selectbox("6. Select term list with a property", ['female_terms', 'male_terms', 'female_names', 'male_names', 'young_people_names', 'old_people_names', 'european_american_names_5', 'african_american_names_5'])
@@ -180,11 +181,9 @@ button_metric = st.sidebar.button("Run metric")
 data_3 = {"property_terms_1": metric_terms_1, "property_terms_2": metric_terms_2, "attribute_terms_1": metric_attr_1, "attribute_terms_1": metric_attr_2}
 
 if button_metric:
-    result = get_metric(metric_choice, model, metric_terms_1, metric_terms_2, metric_attr_1, metric_attr_2)
+    result = get_metric(metric_choice, LOOKUP[model_choice], metric_terms_1, metric_terms_2, metric_attr_1, metric_attr_2)
 
     st.markdown("WEAT Metric")
     st.markdown("The Word Embedding Association Test (WEAT) (Caliskan et al., 2017) calculates a score that measures how much bias a word embedding contains based on the words used to evaluate it. The choice of words thus affects the outcome. The metric requires two sets of target and attribute terms.")
     
     st.markdown(f"WEAT score: {str(result)}")
-    
-
