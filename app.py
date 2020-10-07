@@ -7,7 +7,8 @@ import pathlib
 import requests
 import numpy as np
 import pandas as pd
-from gensim.models import fasttext as FT
+from gensim.models import KeyedVectors
+#from gensim.models import fasttext as FT
 from sklearn.decomposition import PCA
 
 import streamlit as st
@@ -23,7 +24,7 @@ from src.metrics import get_terms, get_metric
 # fasttext.util.download_model('en', if_exists='ignore')
 # ft = fasttext.load_model('cc.en.300.bin')
 
-MODEL_PATH = "cc.en.10.bin"
+MODEL_PATH = "w2v.100k.txt"
 
 # if not os.path.isfile(MODEL_PATH):
 #     r = requests.get("https://www.dropbox.com/s/d7b4f6gn3zae1ie/cc.en.25.bin?dl=0", stream=True, allow_redirects=True)
@@ -34,8 +35,9 @@ MODEL_PATH = "cc.en.10.bin"
 
 @st.cache(allow_output_mutation=True)
 def load_models():
-    model = FT.load_facebook_vectors(MODEL_PATH)
+    #model = FT.load_facebook_vectors(MODEL_PATH)
     # model = fasttext.load_model('cc.en.300.bin')
+    model = KeyedVectors.load_word2vec_format(MODEL_PATH)
     model_deb = copy.deepcopy(model)
     model_deb.init_sims(replace=True)
     return {"fastText": model, "fastText debiased": model_deb}

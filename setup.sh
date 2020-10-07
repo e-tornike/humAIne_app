@@ -6,4 +6,4 @@ enableCORS=false\n
 port = $PORT\n
 \n
 " > ~/.streamlit/config.toml
-wget -O cc.en.10.bin https://www.dropbox.com/s/yfnef36kp5d14l1/cc.en.10.bin?dl=0
+wget -O cc.en.10.bin https://www.dropbox.com/s/m7t27m73qqcl2my/w2v.100k.txt?dl=0
