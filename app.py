@@ -17,14 +17,20 @@ from src.models import get_3D_coordinates
 from src.debias_Lauscher2020 import debias_model
 from src.metrics import get_terms, get_metric
 
-MODEL_PATH = "cc.en.25.bin.gz"
+import fasttext
+import fasttext.util
 
-if not os.path.isfile(MODEL_PATH):
-    r = requests.get("https://www.dropbox.com/s/06zx30696rdllg2/cc.en.25.bin.gz?dl=0", stream=True, allow_redirects=True)
-    with open(MODEL_PATH, "wb") as f:
-        for chunk in r.raw.stream(1024, decode_content=False):
-            if chunk:
-                f.write(chunk)
+fasttext.util.download_model('en', if_exists='ignore')
+ft = fasttext.load_model('cc.en.300.bin')
+
+# MODEL_PATH = "cc.en.25.bin.gz"
+
+# if not os.path.isfile(MODEL_PATH):
+#     r = requests.get("https://www.dropbox.com/s/06zx30696rdllg2/cc.en.25.bin.gz?dl=0", stream=True, allow_redirects=True)
+#     with open(MODEL_PATH, "wb") as f:
+#         for chunk in r.raw.stream(1024, decode_content=False):
+#             if chunk:
+#                 f.write(chunk)
 
 @st.cache(allow_output_mutation=True)
 def load_models():
