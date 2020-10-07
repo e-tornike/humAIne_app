@@ -25,7 +25,7 @@ MODEL_PATH = "w2b_bitlevel2_size400_vocab400K"
 @st.cache(allow_output_mutation=True)
 def load_models():
     # model = api.load(MODEL_PATH)
-    model = KeyedVectors.load_word2vec_format(MODEL_PATH, binary=False, limit=25000)
+    model = KeyedVectors.load_word2vec_format(MODEL_PATH, binary=False, limit=50000)
     model_deb = copy.deepcopy(model)
     model_deb.init_sims(replace=True)
     return {"GloVe": model, "GloVe debiased": model_deb}
