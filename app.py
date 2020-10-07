@@ -19,11 +19,13 @@ from src.debias_Lauscher2020 import debias_model
 from src.metrics import get_terms, get_metric
 
 
-MODEL_PATH = "glove-twitter-25"
+# MODEL_PATH = "glove-twitter-25"
+MODEL_PATH = "w2b_bitlevel2_size400_vocab400K"
 
 @st.cache(allow_output_mutation=True)
 def load_models():
-    model = api.load(MODEL_PATH)
+    # model = api.load(MODEL_PATH)
+    model = KeyedVectors.load_word2vec_format(MODEL_PATH, binary=False, limit=25000)
     model_deb = copy.deepcopy(model)
     model_deb.init_sims(replace=True)
     return {"GloVe": model, "GloVe debiased": model_deb}
