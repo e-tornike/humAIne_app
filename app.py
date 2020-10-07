@@ -21,7 +21,7 @@ import fasttext
 import fasttext.util
 
 fasttext.util.download_model('en', if_exists='ignore')
-ft = fasttext.load_model('cc.en.300.bin')
+# ft = fasttext.load_model('cc.en.300.bin')
 
 # MODEL_PATH = "cc.en.25.bin.gz"
 
@@ -34,7 +34,8 @@ ft = fasttext.load_model('cc.en.300.bin')
 
 @st.cache(allow_output_mutation=True)
 def load_models():
-    model = FT.load_facebook_vectors("cc.en.25.bin.gz")
+    # model = FT.load_facebook_vectors("cc.en.25.bin.gz")
+    model = fasttext.load_model('cc.en.300.bin')
     model_deb = copy.deepcopy(model)
     model_deb.init_sims(replace=True)
     return {"fastText": model, "fastText debiased": model_deb}
