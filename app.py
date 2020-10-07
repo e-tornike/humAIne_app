@@ -19,7 +19,7 @@ from src.debias_Lauscher2020 import debias_model
 from src.metrics import get_terms, get_metric
 
 
-# MODEL_PATH = "glove-twitter-25"
+# MODEL_PATH = "Word2Vec-twitter-25"
 MODEL_PATH = "w2b_bitlevel2_size400_vocab400K"
 
 @st.cache(allow_output_mutation=True)
@@ -28,7 +28,7 @@ def load_models():
     model = KeyedVectors.load_word2vec_format(MODEL_PATH, binary=False, limit=50000)
     model_deb = copy.deepcopy(model)
     model_deb.init_sims(replace=True)
-    return {"GloVe": model, "GloVe debiased": model_deb}
+    return {"Word2Vec": model, "Word2Vec debiased": model_deb}
 
 headers_1 = {'accept': 'application/json'}
 headers_2 = {'accept': 'application/json', 'Content-Type': 'application/json'}
@@ -38,7 +38,7 @@ st.title("Visualizer")
 st.sidebar.title("Parameters")
 st.sidebar.title("Choose Model")
 
-model_choice = st.sidebar.selectbox("Choose a model:", ['GloVe'])
+model_choice = st.sidebar.selectbox("Choose a model:", ['Word2Vec'])
 
 LOOKUP = load_models()  # load models
 
@@ -69,8 +69,8 @@ button_viz = st.sidebar.button("Visualize")
 if button_viz:
     coordinates = get_3D_coordinates(model, terms)
 
-    st.markdown("GloVe Model")
-    st.markdown("Word embeddings are vectors of numbers that are used to represent words. GloVe (Grave et al., 2018) word embeddings were trained on the text on Common Crawl and Wikipedia, which contain many millions of websites. The model learns vectors for words, which are called word embeddings, by prediction a word according to its context. For example, when looking at a sequence of 5 words, the middle word in the sequence is predicted taking the surrounding words into account.")
+    st.markdown("Word2Vec Model")
+    st.markdown("Word embeddings are vectors of numbers that are used to represent words. The Word2Vec model (Lam, 2018) used in this example was trained on the text contained in the 2017 English Wikipedia, which contains 24Gb of text. The model learns vectors for words, which are called word embeddings, by prediction a word according to its context. For example, when looking at a sequence of 5 words, the middle word in the sequence is predicted taking the surrounding words into account.")
 
     _t1_coords = [coordinates[t] for t in viz_terms_1]
     _t2_coords = [coordinates[t] for t in viz_terms_2]
@@ -115,8 +115,8 @@ deb_terms_2 = text_5.split(", ")
 button_deb = st.sidebar.button("Run debiasing")
 
 if button_deb:
-    LOOKUP["GloVe debiased"] = debias_model(LOOKUP["GloVe debiased"], deb_choice, deb_terms_1, deb_terms_2)
-    model = LOOKUP["GloVe debiased"]
+    LOOKUP["Word2Vec debiased"] = debias_model(LOOKUP["Word2Vec debiased"], deb_choice, deb_terms_1, deb_terms_2)
+    model = LOOKUP["Word2Vec debiased"]
     coordinates = get_3D_coordinates(model, terms)
 
     st.markdown("GBDD Debiasing")
