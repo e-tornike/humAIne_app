@@ -8,4 +8,3 @@ port = $PORT\n
 " > ~/.streamlit/config.toml
 mkdir -p ~/models/
 gdown https://drive.google.com/uc?id=1GG1xCzZpoys-cRMyKCtwDaqyY2WQaCCl ~/models/
-gunzip ~/models/cc.en.25.bin.gz ~/models/
