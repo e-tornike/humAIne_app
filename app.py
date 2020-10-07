@@ -24,12 +24,12 @@ if not os.path.isfile(MODEL_PATH):
     with open(MODEL_PATH, "wb") as f:
         f.write(r.content)
 
-# @st.cache(allow_output_mutation=True)
-# def load_models():
-#     model = FT.load_facebook_vectors("/app/models/cc.en.25.bin.gz")
-#     model_deb = copy.deepcopy(model)
-#     model_deb.init_sims(replace=True)
-#     return {"fastText": model, "fastText debiased": model_deb}
+@st.cache(allow_output_mutation=True)
+def load_models():
+    model = FT.load_facebook_vectors("/app/models/cc.en.25.bin.gz")
+    model_deb = copy.deepcopy(model)
+    model_deb.init_sims(replace=True)
+    return {"fastText": model, "fastText debiased": model_deb}
 
 headers_1 = {'accept': 'application/json'}
 headers_2 = {'accept': 'application/json', 'Content-Type': 'application/json'}
