@@ -41,8 +41,8 @@ st.sidebar.title("Choose Model")
 
 model_choice = st.sidebar.selectbox("Choose a model:", ['fastText'])
 
-# LOOKUP = load_models()  # load models
-LOOKUP = {"fastText": "", "fastText debiased": ""}  # load models
+LOOKUP = load_models()  # load models
+# LOOKUP = {"fastText": "", "fastText debiased": ""}  # load models
 
 model = LOOKUP[model_choice]
 
