@@ -16,12 +16,12 @@ from src.debias_Lauscher2020 import debias_model
 from src.metrics import get_terms, get_metric
 
 
-@st.cache(allow_output_mutation=True)
-def load_models():
-    model = FT.load_facebook_vectors("./models/cc.en.25.bin.gz")
-    model_deb = copy.deepcopy(model)
-    model_deb.init_sims(replace=True)
-    return {"fastText": model, "fastText debiased": model_deb}
+# @st.cache(allow_output_mutation=True)
+# def load_models():
+#     model = FT.load_facebook_vectors("./models/cc.en.25.bin.gz")
+#     model_deb = copy.deepcopy(model)
+#     model_deb.init_sims(replace=True)
+#     return {"fastText": model, "fastText debiased": model_deb}
 
 headers_1 = {'accept': 'application/json'}
 headers_2 = {'accept': 'application/json', 'Content-Type': 'application/json'}
@@ -33,7 +33,8 @@ st.sidebar.title("Choose Model")
 
 model_choice = st.sidebar.selectbox("Choose a model:", ['fastText'])
 
-LOOKUP = load_models()  # load models
+# LOOKUP = load_models()  # load models
+LOOKUP = {"fastText": "", "fastText debiased": ""}  # load models
 
 model = LOOKUP[model_choice]
 
