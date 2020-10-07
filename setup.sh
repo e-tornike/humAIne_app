@@ -7,5 +7,5 @@ port = $PORT\n
 \n
 " > ~/.streamlit/config.toml
 mkdir -p ~/models/
-aria2c -x16 https://drive.google.com/uc?id=1GG1xCzZpoys-cRMyKCtwDaqyY2WQaCCl -d ~/models
-gunzip ~/models/cc.en.25.bin.gz ~/models/
+wget ./models/cc.en.25.bin.gz https://www.dropbox.com/s/06zx30696rdllg2/cc.en.25.bin.gz?dl=0
+gunzip ./models/cc.en.25.bin.gz ./models/
